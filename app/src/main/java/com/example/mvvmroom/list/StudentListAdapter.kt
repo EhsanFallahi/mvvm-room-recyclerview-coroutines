@@ -30,7 +30,6 @@ class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.
         binding.apply {
             tvUserName.text=student.userName
             tvEmail.text=student.email
-            tvPassword.text=student.password
         }
     }
 }

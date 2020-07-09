@@ -60,6 +60,7 @@
             android:layout_marginBottom="16dp"
             android:text="ClearAll"
             android:textAllCaps="false"
+            android:onClick="@{()->viewModelStudentListFragment.clearAll()}"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

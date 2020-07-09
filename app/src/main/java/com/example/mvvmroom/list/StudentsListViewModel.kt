@@ -17,4 +17,9 @@ class StudentsListViewModel(
     fun clearStudent(student: Student): Job =viewModelScope.launch { studentRepository.clearStudent(student) }
     fun clearAllStudent(): Job =viewModelScope.launch { studentRepository.clearAll() }
 
+    fun clearAll(){
+
+        clearAllStudent()
+    }
+
 }

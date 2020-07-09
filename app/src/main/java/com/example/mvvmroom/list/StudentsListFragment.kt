@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmroom.R
 import com.example.mvvmroom.database.Student
 import com.example.mvvmroom.database.StudentDatabase
@@ -24,6 +26,7 @@ class StudentsListFragment : Fragment() {
     private lateinit var binding: StudentsListFragmentBinding
     private lateinit var viewModel: StudentsListViewModel
     private lateinit var viewModelFactory: StudentListViewModelFactory
+    lateinit var studentListAdapter: StudentListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -35,6 +38,7 @@ class StudentsListFragment : Fragment() {
         viewModelFactory= StudentListViewModelFactory(studentRepository,application)
         viewModel= ViewModelProvider(this,viewModelFactory).get(StudentsListViewModel::class.java)
         binding.lifecycleOwner = this
+        binding.viewModelStudentListFragment=viewModel
         initRecyclerview()
 
         return binding.root
@@ -43,6 +47,8 @@ class StudentsListFragment : Fragment() {
     private fun initRecyclerview() {
         binding.recyclerview.apply {
             layoutManager=LinearLayoutManager(context.applicationContext)
+            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+            itemTouchHelper.attachToRecyclerView(this)
         }
         getListStudent()
         }
@@ -50,8 +56,36 @@ class StudentsListFragment : Fragment() {
     private fun getListStudent(){
         viewModel.getAllStudents.observe(viewLifecycleOwner, Observer {
             binding.recyclerview.adapter=StudentListAdapter(it)
+            studentListAdapter= StudentListAdapter(it)
         })
     }
+
+    val itemTouchHelperCallback=
+        object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or
+                    ItemTouchHelper.LEFT or ItemTouchHelper.UP or ItemTouchHelper.DOWN){
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean {
+                if (viewHolder.itemViewType != target.itemViewType)
+                    return false
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                val data=viewModel.getAllStudents.value!! as ArrayList
+                val item = data.removeAt(fromPosition)
+                data.add(toPosition, item)
+                studentListAdapter.notifyItemMoved(fromPosition, toPosition)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val data=viewModel.getAllStudents.value!! as ArrayList
+                data.removeAt(viewHolder.adapterPosition)
+                studentListAdapter.notifyDataSetChanged()
+            }
+
+
+        }
+
 
 }
 
