@@ -5,7 +5,6 @@ import androidx.room.*
 
 @Dao
 interface StudentDao {
-
     @Insert
     suspend fun insert(student: Student)
 
