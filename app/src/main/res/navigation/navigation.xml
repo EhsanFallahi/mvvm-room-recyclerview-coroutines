@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/studentsListFragment"
-        android:name="com.example.mvvmroomrecyclerviewex.list.StudentsListFragment"
+        android:name="com.example.mvvmroom.list.StudentsListFragment"
         android:label="StudentsListFragment"
         tools:layout="@layout/students_list_fragment"
         >

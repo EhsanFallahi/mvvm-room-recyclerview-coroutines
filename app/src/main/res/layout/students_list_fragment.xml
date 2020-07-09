@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModelStudentListFragment"
-            type="com.example.mvvmroomrecyclerviewex.list.StudentsListViewModel" />
+            type="com.example.mvvmroom.list.StudentsListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

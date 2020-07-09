@@ -1,5 +1,6 @@
 package com.example.mvvmroom.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import com.example.mvvmroom.R
 import com.example.mvvmroom.database.Student
 import com.example.mvvmroom.database.StudentDatabase
@@ -25,11 +27,7 @@ class LoginFragment : Fragment() {
      private lateinit var binding: LoginFragmentBinding
      private lateinit var viewModel: LoginViewModel
      private lateinit var viewModelFactory: LoginViewModelFactory
-     private lateinit var userName:Editable
-     private lateinit var email:Editable
-     private lateinit var password:Editable
-     private lateinit var phoneNumber:Editable
-     private lateinit var student: Student
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +42,9 @@ class LoginFragment : Fragment() {
         binding.viewModelLoginFragment=viewModel
 
         diplayListStudent()
+        binding.btnDisplayStudents.setOnClickListener {
+            Navigation.findNavController(it).navigate(LoginFragmentDirections.actionLoginFragmentToStudentsListFragment())
+        }
 
 
 
@@ -83,17 +84,6 @@ class LoginFragment : Fragment() {
 //        }
 //    }
 
-//    private fun resetText() {
-//        binding.apply {
-//            textInputEmail.text=null
-//            textInputUserName.text=null
-//            textInputPassword.text=null
-//            textInputPhoneNumber.text=null
-//        }
-//    }
-//
-//    private fun submitLogin() {
-//        initInformation()
-//    }
+
 
 }
