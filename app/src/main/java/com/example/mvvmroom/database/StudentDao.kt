@@ -18,7 +18,7 @@ interface StudentDao {
     suspend fun clearAll()
 
     @Query("SELECT * FROM student_table WHERE id=:key")
-    suspend fun getStudent(key:Long):LiveData<Student>
+    fun getStudent(key:Long):LiveData<Student>
 
     @Query("SELECT * FROM student_table")
     fun getAllStudent():LiveData<List<Student>>
