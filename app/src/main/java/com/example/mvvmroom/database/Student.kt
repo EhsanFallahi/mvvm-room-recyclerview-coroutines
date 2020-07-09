@@ -9,9 +9,9 @@ data class Student(
     @PrimaryKey(autoGenerate = true)
     val id:Long,
     @ColumnInfo(name = "user_name")
-    val userName:String,
+    val userName:String?,
     @ColumnInfo(name = "email")
-    val email:String,
+    val email:String?,
     @ColumnInfo(name = "password")
-    val password:Int
+    val password:String
 )

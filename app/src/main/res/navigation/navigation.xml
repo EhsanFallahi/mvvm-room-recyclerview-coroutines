@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mvvmroom.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login_fragment"
+        >
+        <action
+            android:id="@+id/action_loginFragment_to_studentsListFragment"
+            app:destination="@id/studentsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentsListFragment"
+        android:name="com.example.mvvmroomrecyclerviewex.list.StudentsListFragment"
+        android:label="StudentsListFragment"
+        tools:layout="@layout/students_list_fragment"
+        >
+        <action
+            android:id="@+id/action_studentsListFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.mvvmroom.information.InfoFragment"
+        android:label="done_fragment"
+        tools:layout="@layout/info_fragment" >
+        <action
+            android:id="@+id/action_infoFragment_to_studentsListFragment"
+            app:destination="@id/studentsListFragment" />
+    </fragment>
+</navigation>
