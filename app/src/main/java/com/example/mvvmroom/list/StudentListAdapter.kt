@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmroom.R
 import com.example.mvvmroom.database.Student
 import com.example.mvvmroom.databinding.ListItemBinding
+import com.example.mvvmroom.generated.callback.OnClickListener
 
-class StudentListAdapter(private val studentList:List<Student>):RecyclerView.Adapter<MyViewHolder>() {
+class StudentListAdapter(private val studentList:List<Student>,
+                         private val clickListener:(Student)->Unit):RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater=LayoutInflater.from(parent.context)
         val binding:ListItemBinding=DataBindingUtil
@@ -19,17 +21,20 @@ class StudentListAdapter(private val studentList:List<Student>):RecyclerView.Ada
     override fun getItemCount()=studentList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(studentList[position])
+        holder.bind(studentList[position],clickListener)
     }
 }
 
 
 class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){
 
-    fun bind(student:Student){
+    fun bind(student:Student,clickListener:(Student)->Unit){
         binding.apply {
             tvUserName.text=student.userName
             tvEmail.text=student.email
+            listItemLayout.setOnClickListener {
+                clickListener(student)
+            }
         }
     }
 }

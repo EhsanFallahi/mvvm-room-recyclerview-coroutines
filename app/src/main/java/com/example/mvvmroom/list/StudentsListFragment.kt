@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,45 +48,20 @@ class StudentsListFragment : Fragment() {
     private fun initRecyclerview() {
         binding.recyclerview.apply {
             layoutManager=LinearLayoutManager(context.applicationContext)
-            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-            itemTouchHelper.attachToRecyclerView(this)
+
         }
         getListStudent()
         }
 
     private fun getListStudent(){
         viewModel.getAllStudents.observe(viewLifecycleOwner, Observer {
-            binding.recyclerview.adapter=StudentListAdapter(it)
-            studentListAdapter= StudentListAdapter(it)
+            binding.recyclerview.adapter=StudentListAdapter(it,{itemSelected:Student ->listItemClicked(itemSelected)})
+
         })
     }
-
-    val itemTouchHelperCallback=
-        object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or
-                    ItemTouchHelper.LEFT or ItemTouchHelper.UP or ItemTouchHelper.DOWN){
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean {
-                if (viewHolder.itemViewType != target.itemViewType)
-                    return false
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                val data=viewModel.getAllStudents.value!! as ArrayList
-                val item = data.removeAt(fromPosition)
-                data.add(toPosition, item)
-                studentListAdapter.notifyItemMoved(fromPosition, toPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val data=viewModel.getAllStudents.value!! as ArrayList
-                data.removeAt(viewHolder.adapterPosition)
-                studentListAdapter.notifyDataSetChanged()
-            }
-
-
-        }
-
-
+    
+    private fun listItemClicked(student:Student){
+        Toast.makeText(context?.applicationContext,"selected name is ${student.userName}",Toast.LENGTH_LONG).show()
+    }
 }
 
