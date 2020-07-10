@@ -1,6 +1,7 @@
 package com.example.mvvmroom.login
 
 import android.app.Application
+import android.util.Patterns
 import android.widget.Toast
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
@@ -26,8 +27,7 @@ class LoginViewModel(
     val email=MutableLiveData<String>()
     @Bindable
     val password=MutableLiveData<String>()
-    @Bindable
-    val phoneNumber=MutableLiveData<String>()
+
 
     val viewModelJob= Job()
     val uiScope= CoroutineScope(Dispatchers.Main+viewModelJob)
@@ -40,16 +40,27 @@ class LoginViewModel(
 
 
     fun saveStudent(){
-        insert(Student(0,userName.value,email.value, password.value!!))
-        Toast.makeText(application,"Success Login",Toast.LENGTH_SHORT).show()
-        resteValue()
+        if (userName.value.isNullOrEmpty()){
+            Toast.makeText(application,"please enter userName",Toast.LENGTH_SHORT).show()
+        }else if (email.value.isNullOrEmpty()){
+            Toast.makeText(application,"please enter email",Toast.LENGTH_SHORT).show()
+        }else if(password.value.isNullOrEmpty()){
+            Toast.makeText(application,"please enter password",Toast.LENGTH_SHORT).show()
+        }else if(!Patterns.EMAIL_ADDRESS.matcher(email.value).matches()){
+            Toast.makeText(application,"please enter correct email address",Toast.LENGTH_SHORT).show()
+        }else{
+            insert(Student(0,userName.value,email.value, password.value!!))
+            Toast.makeText(application,"Success Login",Toast.LENGTH_SHORT).show()
+            resteValue()
+        }
+
     }
 
     private fun resteValue() {
         userName.value=null
         email.value=null
         password.value=null
-        phoneNumber.value=null
+
     }
 
 
