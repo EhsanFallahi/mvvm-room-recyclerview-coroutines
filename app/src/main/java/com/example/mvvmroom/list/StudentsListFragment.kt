@@ -59,5 +59,10 @@ class StudentsListFragment : Fragment() {
         Toast.makeText(context?.applicationContext,"selected name is ${student.userName}",Toast.LENGTH_LONG).show()
         Navigation.findNavController(this.requireView()).navigate(StudentsListFragmentDirections.actionStudentsListFragmentToInfoFragment(student.id))
     }
+
+
+
+
+
 }
 
