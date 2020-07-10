@@ -33,5 +33,8 @@
         <action
             android:id="@+id/action_infoFragment_to_studentsListFragment"
             app:destination="@id/studentsListFragment" />
+        <argument
+            android:name="studentId"
+            app:argType="long" />
     </fragment>
 </navigation>

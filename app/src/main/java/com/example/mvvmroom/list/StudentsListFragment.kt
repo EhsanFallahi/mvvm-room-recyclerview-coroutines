@@ -9,18 +9,13 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmroom.R
 import com.example.mvvmroom.database.Student
 import com.example.mvvmroom.database.StudentDatabase
 import com.example.mvvmroom.database.StudentRepository
-import com.example.mvvmroom.databinding.LoginFragmentBinding
 import com.example.mvvmroom.databinding.StudentsListFragmentBinding
-import com.example.mvvmroom.login.LoginViewModel
-import com.example.mvvmroom.login.LoginViewModelFactory
 
 class StudentsListFragment : Fragment() {
 
@@ -62,6 +57,7 @@ class StudentsListFragment : Fragment() {
     
     private fun listItemClicked(student:Student){
         Toast.makeText(context?.applicationContext,"selected name is ${student.userName}",Toast.LENGTH_LONG).show()
+        Navigation.findNavController(this.requireView()).navigate(StudentsListFragmentDirections.actionStudentsListFragmentToInfoFragment(student.id))
     }
 }
 

@@ -35,7 +35,7 @@ class LoginViewModel(
     fun insert(student: Student):Job= viewModelScope.launch { studentRepository.insert(student)}
     fun update(student: Student):Job=viewModelScope.launch {studentRepository.update(student) }
 
-    fun getStudent(key:Long)=studentRepository.getStudent(key)
+
     fun getAllStudent()=studentRepository.students
 
 
